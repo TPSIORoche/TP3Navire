@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NavireHeritage
+namespace NavireHeritage.classesMetier
 {
-    class Program
+    class Port
     {
-        static void Main(string[] args)
-        {
-
-        }
     }
 }

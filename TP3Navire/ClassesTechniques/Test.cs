@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NavireHeritage
+namespace NavireHeritage.ClassesTechniques
 {
-    class Program
+    class Test
     {
-        static void Main(string[] args)
-        {
-
-        }
     }
 }

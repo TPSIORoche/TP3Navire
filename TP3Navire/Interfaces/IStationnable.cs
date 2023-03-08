@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NavireHeritage
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+namespace Station.Interfaces
 
-        }
+{
+    class IStationnable
+    {
     }
 }

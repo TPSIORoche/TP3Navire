@@ -43,17 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassesMetier\Cargo.cs" />
+    <Compile Include="ClassesMetier\Croisiere.cs" />
+    <Compile Include="ClassesMetier\Navire.cs" />
+    <Compile Include="ClassesMetier\Passager.cs" />
+    <Compile Include="ClassesMetier\Port.cs" />
+    <Compile Include="ClassesMetier\Tanker.cs" />
+    <Compile Include="ClassesTechniques\Test.cs" />
+    <Compile Include="Exceptions\GestionPortException.cs" />
+    <Compile Include="Interfaces\ICroisierable.cs" />
+    <Compile Include="Interfaces\INavCommerciable.cs" />
+    <Compile Include="Interfaces\IStationnable.cs" />
     <Compile Include="Program\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClassesMetier\" />
-    <Folder Include="ClassesTechniques\" />
-    <Folder Include="Exceptions\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
