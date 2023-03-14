@@ -32,16 +32,30 @@ namespace NavireHeritage.classesMetier
 
         public char TypeNavireCroisiere 
         { 
-            get => typeNavireCroisiere; 
-            private set {
-                if ((value != 'V') && (value != 'M')) ;
+            get => typeNavireCroisiere;
+            private set
+            {
+                //if ((value != 'V') && (value != 'M')) 
+                //{
+                //    typeNavireCroisiere = value;
+                //}
+                //else
+                //{
+                //    TypeNavireCroisiere=value ? value='V' : null
+                //}
+                if (value=='V')
                 {
-                    typeNavireCroisiere = value;
+                    TypeNavireCroisiere = "Voilier";
+                }
+                else if (value == 'M')
+                {
+                    TypeNavireCroisiere = "Moteur";
                 }
                 else
                 {
-                    valeue? x = condition ? 12 : null
+                    throw new GestionPortException("Type de navire de croisiere invalide");
                 }
+            }
                 
         }
         public int NbPassagersMaxi { get => nbPassagersMaxi; private set => nbPassagersMaxi = value; }
