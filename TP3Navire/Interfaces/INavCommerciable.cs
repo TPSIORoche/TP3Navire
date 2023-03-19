@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Station.Interfaces
+namespace NavireHeritage.classesMetier
 
 {
-    class INavCommerciable
+    interface INavCommerciable
     {
+        void Decharger(int qte);
+        void Charger(int qte);
     }
 }

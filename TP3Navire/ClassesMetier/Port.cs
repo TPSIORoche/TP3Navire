@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NavireHeritage.classesMetier
 {
-    class Port
+    class Port:IStationnable
     {
         private string nom;
         private string latitude;
@@ -154,6 +154,51 @@ namespace NavireHeritage.classesMetier
                 i += (navire is Cargo) ? 1 : 0;
             }
             return i;
+        }
+
+        public void EnregistrerArriveePrevue(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EnregistrerArrivee(string o)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EnregistrerDepart(string o)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EstEnAttente(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EstAttendu(string id)
+        {
+            if (this.NavireEnAttente.ContainsKey(id))
+                {
+                    foreach(Object navAt in this.NavireEnAttente)
+                    {
+                    if (navAt.)
+                    {
+                        return True;
+                    }
+                }
+            }
+            throw new NotImplementedException();
+        }
+
+        public bool EstPresent(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EstParti(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public 

@@ -15,6 +15,7 @@ namespace NavireHeritage.classesMetier
         bool EstAttendu(String id);
         bool EstPresent(String id);
         bool EstParti(String id);
+        bool EstEnAttente(string id);
         Object GetUnAttendu(String id);
         Object GetUnArrive(String id);
         Object GetUnParti(String id);
