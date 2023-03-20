@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestionNavire.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace NavireHeritage.classesMetier
         private int nbQuaisPassager;
         private int nbQuaisTanker;
         private int nbQuaisSuperTanker;
+        private Dictionary<string, Navire> navireAttendus;
         private Dictionary<string, Navire> navireArrives;
         private Dictionary<string, Navire> navirePartis;
         private Dictionary<string, Navire> navireEnAttente;
@@ -28,6 +30,7 @@ namespace NavireHeritage.classesMetier
             NbQuaisPassager = nbQuaisPassager;
             NbQuaisTanker = nbQuaisTanker;
             NbQuaisSuperTanker = nbQuaisSuperTanker;
+            NavireAttendus = new Dictionary<string,Navire>();
             NavireArrives = new Dictionary<string, Navire>();
             NavirePartis = new Dictionary<string, Navire>();
             NavireEnAttente = new Dictionary<string, Navire>();
@@ -83,6 +86,7 @@ namespace NavireHeritage.classesMetier
             get => navireEnAttente;
             private set => navireEnAttente = value;
         }
+        internal Dictionary<string, Navire> NavireAttendus { get => navireAttendus; set => navireAttendus = value; }
 
         public Object GetUnAttendu(string id)
         {
@@ -146,6 +150,7 @@ namespace NavireHeritage.classesMetier
             return i;
         }
 
+        
         public int GetNbCargoArrives()
         {
             int i = 0;
@@ -173,27 +178,40 @@ namespace NavireHeritage.classesMetier
 
         public bool EstEnAttente(string id)
         {
-            throw new NotImplementedException();
-        }
 
-        public bool EstAttendu(string id)
-        {
             if (this.NavireEnAttente.ContainsKey(id))
+            {
+                foreach (Object navAt in this.NavireEnAttente)
                 {
-                    foreach(Object navAt in this.NavireEnAttente)
+                    if (((Navire)navAt).Imo == id)
                     {
-                    if (navAt.)
-                    {
-                        return True;
+                        return true;
                     }
+                    return false;
                 }
             }
             throw new NotImplementedException();
         }
 
-        public bool EstPresent(string id)
+        public bool EstAttendu(string id)
         {
+            if (this.NavireAttendus.ContainsKey(id))
+                {
+                    foreach(Object navAt in this.NavireAttendus)
+                    {
+                    if (((Navire)navAt).Imo==id)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
             throw new NotImplementedException();
+        }
+
+        public bool EstPresent(string imo)
+        {
+            return this.NavireAttendus.ContainsKey(imo);
         }
 
         public bool EstParti(string id)
@@ -201,6 +219,34 @@ namespace NavireHeritage.classesMetier
             throw new NotImplementedException();
         }
 
-        public 
+        public void Chargement(String id , int qte)
+        {
+
+            Navire value;
+            bool existe = this.NavireArrives.TryGetValue(id, out value);
+            if (value.TonnageActuel + qte <= value.TonnageGT)
+            {
+                value.TonnageActuel += qte;
+            }
+            else
+            {
+                throw new GestionPortException("Impossible de charger, il n'y a pas assez de place pour charger");
+            }
+        }
+
+        public void Dechargement(String id, int qte)
+        {
+            Navire value;
+            bool existe = this.NavireArrives.TryGetValue(id, out value);
+            if (value.TonnageActuel - qte >= 0)
+            {
+                value.TonnageActuel -= qte;
+            }
+            else
+            {
+                throw new GestionPortException("Impossible de décharger, il n'y a pas assez à décharger");
+            }
+        }
+
     }
 }

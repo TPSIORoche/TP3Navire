@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NavireHeritage.classesMetier
 {
-    class Cargo:Navire
+    class Cargo:Navire, INavCommerciable
     {
         private string typeFret;
 

@@ -16,11 +16,8 @@ namespace NavireHeritage
             try
             {
 
-
-
-
                 Port port = new Port("Marseille", "43.2976N", "5.3471E", 4, 3, 2, 4);
-                Test.ChargementIinitial(port);
+                Test.ChargementInitial(port);
                 Console.WriteLine(port);
                 Test.AfficheAttendus(port);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NavireHeritage.classesMetier
 {
-    class Tanker:Navire
+    class Tanker:Navire, INavCommerciable
     {
         private string typeFluide;
 

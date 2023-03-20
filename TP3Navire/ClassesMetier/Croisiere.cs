@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace NavireHeritage.classesMetier
 {
-    class Croisiere:Navire
+    class Croisiere:Navire,ICroisierable
     {
-        private char typeNavireCroisiere;
+        private string typeNavireCroisiere;
         private int nbPassagersMaxi;
         private Dictionary<string, Passager> passagers;
 
-        public Croisiere(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, char typeNavireCroisiere, int nbPassagersMaxi, List<Object> listePassagers)
+        public Croisiere(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMaxi, List<Object> listePassagers)
             : base(imo, nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
         {
             TypeNavireCroisiere = typeNavireCroisiere;
@@ -22,7 +22,7 @@ namespace NavireHeritage.classesMetier
             this.Embarquer(listePassagers);
         }
 
-        public Croisiere(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, char typeNavireCroisiere, int nbPassagersMaxi)
+        public Croisiere(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMaxi)
             : base(imo, nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
         {
             TypeNavireCroisiere = typeNavireCroisiere;
@@ -30,7 +30,7 @@ namespace NavireHeritage.classesMetier
             Passagers = new Dictionary<string, Passager>();
         }
 
-        public char TypeNavireCroisiere 
+        public string TypeNavireCroisiere 
         { 
             get => typeNavireCroisiere;
             private set
@@ -43,11 +43,11 @@ namespace NavireHeritage.classesMetier
                 //{
                 //    TypeNavireCroisiere=value ? value='V' : null
                 //}
-                if (value=='V')
+                if (value=="V")
                 {
                     TypeNavireCroisiere = "Voilier";
                 }
-                else if (value == 'M')
+                else if (value == "M")
                 {
                     TypeNavireCroisiere = "Moteur";
                 }
