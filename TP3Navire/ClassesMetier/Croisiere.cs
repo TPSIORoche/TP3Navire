@@ -69,9 +69,10 @@ namespace NavireHeritage.classesMetier
                 {
                     if (passager is Passager)
                     {
-                        if (!this.passagers.ContainsKey(passager.NumPasseport))
+                        Passager pass = (Passager)passager;
+                        if (!this.passagers.ContainsKey(pass.NumPasseport))
                         {
-                            this.passagers.Add(passager.NumPasseport, passager);
+                            this.passagers.Add(pass.NumPasseport, pass);
                         }
                         else
                         {
@@ -98,11 +99,12 @@ namespace NavireHeritage.classesMetier
             {
                 foreach (Object passager in passagers)
                 {
+                    Passager pass = (Passager)passager;
                     if (passager is Passager)
                     {
-                        if (!this.passagers.ContainsKey(passager.NumPasseport))
+                        if (!this.passagers.ContainsKey(pass.NumPasseport))
                         {
-                            this.passagers.Remove(passager.NumPasseport, passager);
+                            this.passagers.Remove(pass.NumPasseport);
                         }
                         else
                         {

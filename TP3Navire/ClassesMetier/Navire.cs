@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestionNavire.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NavireHeritage.classesMetier
 {
-    abstract class Navire
+    public abstract class Navire
     {
         protected string imo;
         protected string nom;

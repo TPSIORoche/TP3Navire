@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NavireHeritage.classesMetier
 {
-    class Port:IStationnable
+    public class Port:IStationnable
     {
         private string nom;
         private string latitude;
@@ -140,10 +140,10 @@ namespace NavireHeritage.classesMetier
             return i;
         }
 
-        public int GetSuperTankerArrives()
+        public int GetNbSuperTankerArrives()
         {
             int i = 0;
-            foreach (Object navire in this.NavireArrives)
+            foreach (Navire navire in this.NavireArrives.Values)
             {
                 i += ((navire is Tanker tanker) && (tanker.TonnageGT>130000))? 1 : 0;
             }
@@ -154,26 +154,107 @@ namespace NavireHeritage.classesMetier
         public int GetNbCargoArrives()
         {
             int i = 0;
-            foreach (Object navire in this.NavireArrives)
+            foreach (Navire navire in this.NavireArrives.Values)
             {
                 i += (navire is Cargo) ? 1 : 0;
             }
             return i;
         }
 
-        public void EnregistrerArriveePrevue(object obj)
+        public void EnregistrerArriveePrevue(Object obj)
         {
+            if (obj is Navire)  
+            {
+                Navire navire = (Navire)obj;
+                //if (this.NavireAttendus.ContainsKey(navire.Imo))
+                if(EstAttendu(navire.Imo))
+                {
+                    throw new GestionPortException($"Le navire {navire.Imo} est déja attendu");
+                }
+                else
+                {
+                    this.NavireAttendus.Add(navire.Imo,navire);
+                }
+            }
             throw new NotImplementedException();
         }
 
-        public void EnregistrerArrivee(string o)
+        private void AjouterNavire(Cargo cargo)
         {
-            throw new NotImplementedException();
+            if (this.NbPortique > GetNbCargoArrives())
+            {
+                if (EstAttendu(cargo.Imo))
+                {
+                    this.NavireAttendus.Remove(cargo.Imo);
+                }
+                //if (this.NavireEnAttente.ContainsKey(navire.Imo))
+                else if (EstEnAttente(cargo.Imo))
+                {
+                    this.NavireEnAttente.Remove(cargo.Imo);
+                }
+                this.NavireArrives.Add(cargo.Imo, cargo);
+            }
+            else
+            {
+                if (EstAttendu(cargo.Imo))
+                {
+                    this.NavireAttendus.Remove(cargo.Imo);
+                    this.NavireEnAttente.Add(cargo.Imo,cargo);
+                }
+                else
+                {
+                    throw new Exception("");
+                }
+            }
         }
 
-        public void EnregistrerDepart(string o)
+        public void EnregistrerArrivee(Object obj)
         {
-            throw new NotImplementedException();
+            if (obj is Navire)
+            {
+                Navire navire = (Navire)obj;
+                if (this.NavireArrives.ContainsKey(navire.Imo))
+                {
+                    throw new GestionPortException($"Le navire {navire.Imo} est déja attendu");
+                }
+                else
+                {   
+                    if()
+                    if (nbPortique>GetNbCargoArrives())
+                    //if (this.NavireAttendus.ContainsKey(navire.Imo))
+                    if(EstAttendu(navire.Imo))
+                    {
+                        this.NavireAttendus.Remove(navire.Imo);
+                    }
+                    //if (this.NavireEnAttente.ContainsKey(navire.Imo))
+                    if(EstEnAttente(navire.Imo))
+                    {
+                        this.NavireEnAttente.Remove(navire.Imo);
+                    }
+                    this.NavireArrives.Add(navire.Imo, navire);
+                }
+            }
+            throw new GestionPortException("Ce n'est pas un navire");
+        }
+
+
+        public void EnregistrerDepart(Object obj)
+        {
+            if (obj is Navire)
+            {
+                Navire navire = (Navire)obj;
+                //if (this.NavireArrives.ContainsKey(navire.Imo))
+                if(EstPresent(navire.Imo))
+                {
+                    throw new GestionPortException($"Le navire {navire.Imo} est déja attendu");
+                }
+                else
+                {
+                    this.NavireArrives.Remove(navire.Imo);
+                    this.NavirePartis.Add(navire.Imo, navire);
+                }
+            }
+            throw new GestionPortException("Ce n'est pas un navire");
         }
 
         public bool EstEnAttente(string id)
@@ -246,6 +327,32 @@ namespace NavireHeritage.classesMetier
             {
                 throw new GestionPortException("Impossible de décharger, il n'y a pas assez à décharger");
             }
+        }
+
+        public override string ToString()
+        {
+
+            string chaine= $"----------------------------------------------" +
+                $"Port de {this.Nom}\n" +
+                $"\tCoordonnées GPS : {this.Longitude} / {this.Latitude}" +
+                $"\t Nb portiques : {this.NbPortique}" +
+                $"\t Nb quais croisière : {this.NbQuaisTanker}" +
+                $"\t Nb quais super tankers : {this.NbQuaisSuperTanker}" +
+                $"\t Nb Navires à quai : {NavireArrives}" +
+                $"\t Nb Navires attendus : {NavireAttendus}" +
+                $"\t Nb Navires à partis : {NavirePartis}" +
+                $"\t Nb Navires en attente : {NavireEnAttente}" +
+                $"\n Nombre de cargos dans le port : {this.GetNbCargoArrives()}" +
+                $"Nombre de tankers dans le port : {this.GetNbTankerArrives()}" +
+                $"Nombre de super tankers dans le port : {this.GetNbSuperTankerArrives()}\n" +
+                $"----------------------------------------------" +
+                $"\n Liste des bateaux en attentes de leur arrivée : ";
+            foreach (Object navire in this.navireEnAttente)
+            {
+                Navire nav=(Navire)navire;
+                chaine += $"\n{nav.Imo}\t{nav.Nom} : {nav.GetType()}";
+            }
+            return chaine;
         }
 
     }
