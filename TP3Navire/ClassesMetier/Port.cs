@@ -179,6 +179,19 @@ namespace NavireHeritage.classesMetier
             throw new NotImplementedException();
         }
 
+        private void AjouterNavire(Croisiere croisiere)
+        {
+            if (EstAttendu(croisiere.Imo))
+            {
+                this.NavireAttendus.Remove(croisiere.Imo);
+                this.NavireArrives.Add(croisiere.Imo, croisiere);
+            }
+            else
+            {
+                throw new Exception("");
+            }
+        }
+
         private void AjouterNavire(Cargo cargo)
         {
             if (this.NbPortique > GetNbCargoArrives())
@@ -186,13 +199,27 @@ namespace NavireHeritage.classesMetier
                 if (EstAttendu(cargo.Imo))
                 {
                     this.NavireAttendus.Remove(cargo.Imo);
+                    foreach (Navire c in this.NavireEnAttente.Values)
+                    {
+                        if(this.NbPortique > GetNbCargoArrives() && c is Cargo)
+                        {
+                            this.NavireArrives.Add(c.Imo, c);
+                        }
+                    }
+                    if (this.NbPortique > GetNbCargoArrives())
+                    {
+                        this.NavireArrives.Add(cargo.Imo, cargo);
+                    }
+                    else
+                    {
+                        this.NavireEnAttente.Add(cargo.Imo, cargo);
+                    }
                 }
                 //if (this.NavireEnAttente.ContainsKey(navire.Imo))
-                else if (EstEnAttente(cargo.Imo))
+                else
                 {
-                    this.NavireEnAttente.Remove(cargo.Imo);
+                    throw new Exception("");
                 }
-                this.NavireArrives.Add(cargo.Imo, cargo);
             }
             else
             {
@@ -200,6 +227,35 @@ namespace NavireHeritage.classesMetier
                 {
                     this.NavireAttendus.Remove(cargo.Imo);
                     this.NavireEnAttente.Add(cargo.Imo,cargo);
+                }
+                else
+                {
+                    throw new Exception("");
+                }
+            }
+        }
+
+        private void AjouterNavire(Tanker tanker)
+        {
+            if (this.NbPortique > GetNbCargoArrives())
+            {
+                if (EstAttendu(tanker.Imo))
+                {
+                    this.NavireAttendus.Remove(tanker.Imo);
+                }
+                //if (this.NavireEnAttente.ContainsKey(navire.Imo))
+                else if (EstEnAttente(tanker.Imo))
+                {
+                    this.NavireEnAttente.Remove(tanker.Imo);
+                }
+                this.NavireArrives.Add(tanker.Imo, tanker);
+            }
+            else
+            {
+                if (EstAttendu(tanker.Imo))
+                {
+                    this.NavireAttendus.Remove(tanker.Imo);
+                    this.NavireEnAttente.Add(tanker.Imo, tanker);
                 }
                 else
                 {
@@ -218,20 +274,8 @@ namespace NavireHeritage.classesMetier
                     throw new GestionPortException($"Le navire {navire.Imo} est déja attendu");
                 }
                 else
-                {   
-                    if()
-                    if (nbPortique>GetNbCargoArrives())
-                    //if (this.NavireAttendus.ContainsKey(navire.Imo))
-                    if(EstAttendu(navire.Imo))
-                    {
-                        this.NavireAttendus.Remove(navire.Imo);
-                    }
-                    //if (this.NavireEnAttente.ContainsKey(navire.Imo))
-                    if(EstEnAttente(navire.Imo))
-                    {
-                        this.NavireEnAttente.Remove(navire.Imo);
-                    }
-                    this.NavireArrives.Add(navire.Imo, navire);
+                {
+                    this.AjouterNavire(obj);
                 }
             }
             throw new GestionPortException("Ce n'est pas un navire");
